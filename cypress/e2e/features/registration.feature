@@ -59,9 +59,15 @@
    Então devo ver a mensagem de erro indicando que o email já está cadastrado
 
 # Funcionalidade: Validação dos campos de cadastro de usuário
-  Cenário: Retornar para a pagina de listagem de usuários
+  Cenário: Retornar para a pagina de listagem de usuários ao clicar no botão de Voltar
    Quando clicar no botão de Voltar
    Então devo ver a página de listagem de usuários
+
+  Cenário: Retornar para a pagina de listagem de usuários ao clicar no icone da Raro
+   Quando clicar no icone da Raro
+   Então devo ver a página de listagem de usuários
+
+
 
 
 

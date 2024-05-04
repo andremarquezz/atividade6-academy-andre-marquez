@@ -72,6 +72,10 @@ When("clicar no botão de Voltar", () => {
   registrationPage.clickBackButton();
 });
 
+When("clicar no icone da Raro", () => {
+  registrationPage.clickRaroIcon();
+});
+
 Then("devo ver a mensagem de sucesso", () => {
   cy.wait("@createUser");
   registrationPage
