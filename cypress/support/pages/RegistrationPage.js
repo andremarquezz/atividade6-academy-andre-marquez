@@ -52,12 +52,10 @@ export class RegistrationPage {
   }
 
   register(name, email) {
-    if (name) {
-      this.typeName(name);
-    }
-    if (email) {
-      this.typeEmail(email);
-    }
+    this.typeName(name);
+
+    this.typeEmail(email);
+
     this.clickSubmitButton();
   }
 }

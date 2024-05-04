@@ -1,8 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
+import { mockErrorUserAlreadyExists } from "../../fixtures/mocksErrors";
+import { ListPage } from "../pages/ListPage";
 import { RegistrationPage } from "../pages/RegistrationPage";
 
 const registrationPage = new RegistrationPage();
+const listPage = new ListPage();
 
 Given("que estou na página de cadastro", () => {
   registrationPage.visit();
@@ -21,7 +24,16 @@ When("preencher o campo email com um email válido", () => {
   registrationPage.typeEmail(email);
 });
 
+When("preencher o campo nome com um nome válido", () => {
+  const name = faker.helpers.arrayElement(
+    faker.rawDefinitions.person.first_name.filter((a) => a.length >= 4)
+  );
+  registrationPage.typeName(name);
+});
+
 When("não preencher o campo nome", () => {});
+
+When("não preencher o campo email", () => {});
 
 When("preencher o campo nome com mais de 100 caracteres", () => {
   const name = faker.lorem.words(101);
@@ -38,9 +50,26 @@ When("preencher os campos nome e email", () => {
   registrationPage.typeEmail(email);
 });
 
+When("preencher o campo email com um email com mais de 60 caracteres", () => {
+  const email = `${faker.lorem.words(46)}@gmail.com`;
+  registrationPage.typeEmail(email);
+});
+
+When("preencher o campo email com um email já cadastrado", () => {
+  cy.intercept("POST", "/api/v1/users", mockErrorUserAlreadyExists).as(
+    "UserAlreadyExists"
+  );
+  const email = "jey@gmail.com";
+  registrationPage.typeEmail(email);
+});
+
 When("clicar no botão de Salvar", () => {
   cy.intercept("POST", "/api/v1/users").as("createUser");
   registrationPage.clickSubmitButton();
+});
+
+When("clicar no botão de Voltar", () => {
+  registrationPage.clickBackButton();
 });
 
 Then("devo ver a mensagem de sucesso", () => {
@@ -87,3 +116,42 @@ Then(
       .and("contain.text", "Informe no máximo 100 caracteres para o nome");
   }
 );
+
+Then("devo ver a mensagem de erro indicando que o email é obrigatório", () => {
+  registrationPage
+    .getErrorFeedbackMessageName()
+    .should("be.visible")
+    .and("contain.text", "O campo e-mail é obrigatório.");
+});
+
+Then("devo ver a mensagem de erro indicando que o email é inválido", () => {
+  registrationPage
+    .getErrorFeedbackMessageEmail()
+    .should("be.visible")
+    .and("contain.text", "Formato de e-mail inválido");
+});
+
+Then(
+  "devo ver a mensagem de erro indicando que o email deve ter no máximo 60 caracteres",
+  () => {
+    registrationPage
+      .getErrorFeedbackMessageEmail()
+      .should("be.visible")
+      .and("contain.text", "Informe no máximo 60 caracteres para o e-mail");
+  }
+);
+
+Then(
+  "devo ver a mensagem de erro indicando que o email já está cadastrado",
+  () => {
+    cy.wait("@UserAlreadyExists");
+    registrationPage
+      .getErrorModal()
+      .should("be.visible")
+      .and("contain.text", "Este e-mail já é utilizado por outro usuário.");
+  }
+);
+
+Then("devo ver a página de listagem de usuários", () => {
+  cy.url().should("eq", listPage.URL);
+});
