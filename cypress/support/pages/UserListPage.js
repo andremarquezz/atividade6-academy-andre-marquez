@@ -1,4 +1,4 @@
-export class ListPage {
+export class UserListPage {
   userDataName = `[data-test="userDataName"]`;
   userDataEmail = `[data-test="userDataEmail"]`;
   userDetailsButton = "#userDataDetalhe";

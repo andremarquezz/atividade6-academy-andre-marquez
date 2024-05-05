@@ -1,4 +1,4 @@
-export class RegistrationPage {
+export class UserRegistrationPage {
   nameInput = "#name";
   emailInput = "#email";
   submitButton = ".sc-kpDqfm";
@@ -12,7 +12,6 @@ export class RegistrationPage {
   URL = "https://rarocrud-frontend-88984f6e4454.herokuapp.com/users/novo";
 
   visit() {
-    cy.viewport("macbook-16");
     cy.visit(this.URL);
   }
   typeName(name) {
