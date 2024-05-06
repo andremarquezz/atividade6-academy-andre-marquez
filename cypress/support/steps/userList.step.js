@@ -1,4 +1,5 @@
 import { Before, Given, Then } from "cypress-cucumber-preprocessor/steps";
+import { mockErrorInternalServer } from "../../fixtures/mocksErrors";
 import { UserListPage } from "../pages/UserListPage";
 
 const userListPage = new UserListPage();
@@ -12,7 +13,19 @@ Before({ tags: "@userListEmpty" }, () => {
   cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
 });
 
+Before({ tags: "@InternalError" }, () => {
+  cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
+});
+
 Given("que acesso a página de listagem de usuários", () => {
+  cy.intercept("GET", "/api/v1/users", (req) => {
+    if (Cypress.env("apiFailure")) {
+      req.reply(mockErrorInternalServer);
+    } else {
+      req.continue();
+    }
+  }).as("getAllUsers");
+
   userListPage.visit();
   cy.wait("@getAllUsers");
 });
@@ -50,6 +63,24 @@ When("pesquisar por um nome de usuário", () => {
   });
 });
 
+When("pesquisar por um nome de usuário que não existe", () => {
+  cy.intercept("GET", "/api/v1/search?value=*", []).as("searchUser");
+
+  userListPage.typeSearchBar("Calabreso");
+  cy.wait("@searchUser");
+});
+
+When("pesquisar por um email de usuário que não existe", () => {
+  cy.intercept("GET", "/api/v1/search?value=*", []).as("searchUser");
+
+  userListPage.typeSearchBar("jey@gmail.com");
+  cy.wait("@searchUser");
+});
+
+Given("que a API de listagem de usuários esta offline", () => {
+  Cypress.env("apiFailure", true);
+});
+
 When("pesquisar por um email de usuário", () => {
   cy.get("@getAllUsers").then(({ response }) => {
     const user = response.body[0];
@@ -62,6 +93,29 @@ When("pesquisar por um email de usuário", () => {
 });
 
 When("não existem usuários cadastrados", () => {});
+
+Then(
+  "devo visualizar uma mensagem de erro informando que não foi encontrado nenhum usuário",
+  () => {
+    userListPage
+      .getEmptyUserListMessage()
+      .should("be.visible")
+      .and("contain.text", "Ops! Não existe nenhum usuário para ser exibido.");
+  }
+);
+
+Then(
+  "devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários",
+  () => {
+    userListPage
+      .getModalErrorServerMessage()
+      .should("be.visible")
+      .and(
+        "contain.text",
+        "Não foi possível consultar os usuários cadastrados."
+      );
+  }
+);
 
 Then("devo visualizar o nome e email do usuário pesquisado", () => {
   cy.get("@getAllUsers").then(({ response }) => {
