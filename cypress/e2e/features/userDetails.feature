@@ -5,17 +5,17 @@ Funcionalidade: Detalhes de usuário
   Quero ver os detalhes de um usuário
   Para saber mais sobre ele
 
-  Cenário: Deve ser possível consultar os detalhes de um usuário
-    Dado que estou na página de detalhes de um usuário
-    Quando eu vejo os detalhes do usuário
-    Então eu vejo o nome do usuário
-    E eu vejo o email do usuário
-    E vejo o ID do usuário
+  # Cenário: Deve ser possível consultar os detalhes de um usuário
+  #   Dado que estou na página de detalhes do usuário
+  #   Quando visualizo as informações do usuário
+  #   Então devo visualizar o ID do usuário
+  #   E devo visualizar o nome do usuário
+  #   E devo visualizar o email do usuário
 
-  Cenário: Deve ser exibida uma mensagem de usuário não encontrado
-    Dado que estou na página de detalhes de um usuário
-    Quando o usuário não for encontrado
-    Então eu vejo a mensagem "Usuário não encontrado"
+  # Cenário: Deve ser exibida uma mensagem de usuário não encontrado
+  #   Dado que estou na página de detalhes de um usuário
+  #   Quando o usuário não for encontrado
+  #   Então eu vejo a mensagem "Usuário não encontrado"
   
   # Cenaŕio: Deve ser possível editar um usuário
   #   Dado que estou na página de detalhes de um usuário

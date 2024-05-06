@@ -11,11 +11,13 @@
   "author": "",
   "license": "ISC",
   "cypress-cucumber-preprocessor": {
-    "step_definitions": "cypress/support/steps"
+    "stepDefinitions": "cypress/support/steps/[filepart].step.js"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.4.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "cypress": "^13.8.1",
-    "cypress-cucumber-preprocessor": "^4.3.1"
+    "esbuild": "^0.20.2",
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.5",
+    "@faker-js/faker": "^8.4.1"
   }
 }

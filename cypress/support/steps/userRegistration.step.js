@@ -1,5 +1,10 @@
+import {
+  Before,
+  Given,
+  Then,
+  When,
+} from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
-import { Before, Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 import { mockErrorUserAlreadyExists } from "../../fixtures/mocksErrors";
 import { UserListPage } from "../pages/UserListPage";
 import { UserRegistrationPage } from "../pages/UserRegistrationPage";

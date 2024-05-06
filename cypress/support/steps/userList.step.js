@@ -1,5 +1,10 @@
+import {
+  Before,
+  Given,
+  Then,
+  When,
+} from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
-import { Before, Given, Then } from "cypress-cucumber-preprocessor/steps";
 import { mockErrorInternalServer } from "../../fixtures/mocksErrors";
 import { UserListPage } from "../pages/UserListPage";
 
@@ -108,7 +113,7 @@ When("clicar no botão de detalhes de um usuário", () => {
   cy.get("@getAllUsers").then(({ response }) => {
     const user = response.body[0];
 
-    cy.intercept("GET", `/api/v1/users/${user.id}`, user).as("getUserById");
+    cy.intercept("GET", `/api/v1/users/${user.id}`).as("getUserById");
     userListPage.clickFirstUserDetailsButton();
 
     cy.wait("@getUserById");

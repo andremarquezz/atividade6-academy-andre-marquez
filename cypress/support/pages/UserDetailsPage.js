@@ -1,4 +1,4 @@
-export class DetailsPage {
+export class UserDetailsPage {
   idInput = "[name=id]";
   nameInput = "#userName";
   emailInput = "#userEmail";
