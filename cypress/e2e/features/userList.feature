@@ -39,29 +39,23 @@ Funcionalidade: Listagem de usuários
     Quando pesquisar por um email de usuário que não existe
     Então devo visualizar uma mensagem de erro informando que não foi encontrado nenhum usuário
 
- 
   Cenário: Deve exibir mensagem de erro ao tentar consultar a lista de usuarios e a API falhar
     Dado que a API de listagem de usuários esta offline
     E que acesso a página de listagem de usuários
     Então devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários
 
-  
+  Cenário: Deve limpar o campo de pesquisa ao clicar no icone de limpar e mostrar todos os usuarios
+    Dado que acesso a página de listagem de usuários
+    E existem usuários cadastrados
+    Quando pesquisar por um nome de usuário
+    E clicar no icone de limpar pesquisa
+    Então devo visualizar o nome e email de cada usuário
 
-  
-
- 
-  
-  # Cenário: Deve limpar o campo de pesquisa ao clicar no icone de limpar e mostrar todos os usuarios
-  #   Dado que acesso a página de listagem de usuários
-  #   E existem usuários cadastrados
-  #   Quando pesquisar por um nome de usuário
-  #   E clicar no icone de limpar
-  #   Então devo visualizar o nome e email de todos os usuários
-  # Cenário: Deve ser possível consultar os usuários da segunda página ao clicar no botão de Proxima página
-  #   Dado que acesso a página de listagem de usuários
-  #   E existem usuários cadastrados
-  #   Quando clicar no botão de próxima página
-  #   Então devo visualizar os usuários da segunda página
+  Cenário: Deve ser possível consultar os usuários da segunda página ao clicar no botão de Proxima página
+    Dado que acesso a página de listagem de usuários
+    E existem usuários cadastrados
+    Quando clicar no botão de próxima página
+    Então devo visualizar os usuários da segunda página
 
   # Cenário: Deve ser possível navegar entre as páginas de usuários ao clicar nos botões de paginação
   #   Dado que acesso a página de listagem de usuários

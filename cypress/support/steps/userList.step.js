@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { Before, Given, Then } from "cypress-cucumber-preprocessor/steps";
 import { mockErrorInternalServer } from "../../fixtures/mocksErrors";
 import { UserListPage } from "../pages/UserListPage";
@@ -10,10 +11,6 @@ Before({ tags: "@userList" }, () => {
 });
 
 Before({ tags: "@userListEmpty" }, () => {
-  cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
-});
-
-Before({ tags: "@InternalError" }, () => {
   cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
 });
 
@@ -61,6 +58,11 @@ When("pesquisar por um nome de usuário", () => {
     userListPage.typeSearchBar(user.name);
     cy.wait("@searchUser");
   });
+});
+
+When("clicar no icone de limpar pesquisa", () => {
+  userListPage.clickClearSearchButton();
+  cy.wait("@getAllUsers");
 });
 
 When("pesquisar por um nome de usuário que não existe", () => {
@@ -114,6 +116,8 @@ Then(
         "contain.text",
         "Não foi possível consultar os usuários cadastrados."
       );
+
+    Cypress.env("apiFailure", false);
   }
 );
 
@@ -159,3 +163,5 @@ Then("devo visualizar o nome e email de cada usuário", () => {
     });
   });
 });
+
+Then("devo retornar para a lista de usuários completa", () => {});
