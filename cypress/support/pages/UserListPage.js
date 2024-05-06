@@ -2,6 +2,8 @@ export class UserListPage {
   userDataName = `[data-test="userDataName"]`;
   userDataEmail = `[data-test="userDataEmail"]`;
   userDetailsButton = "#userDataDetalhe";
+  nextPageButton = "#paginacaoProximo";
+  backPageButton = "#paginacaoVoltar";
   emptyUserListMessage = ".sc-koXPp";
   modalErrorServerMessage = ".sc-dCFHLb";
   newUserAnchor = ".sc-bmzYkS[href='/users/novo']";
@@ -31,6 +33,14 @@ export class UserListPage {
   }
   clickClearSearchButton() {
     return cy.get(this.clearSearchButton).click();
+  }
+
+  clickNextPageButton() {
+    return cy.get(this.nextPageButton).click();
+  }
+
+  clickBackPageButton() {
+    return cy.get(this.backPageButton).click();
   }
 
   getEmptyUserListMessage() {

@@ -57,14 +57,15 @@ Funcionalidade: Listagem de usuários
     Quando clicar no botão de próxima página
     Então devo visualizar os usuários da segunda página
 
-  # Cenário: Deve ser possível navegar entre as páginas de usuários ao clicar nos botões de paginação
-  #   Dado que acesso a página de listagem de usuários
-  #   E existem usuários cadastrados
-  #   Quando clicar nos botões de paginação
-  #   Então devo visualizar os usuários da página selecionada
+  Cenário: Deve ser possível navegar entre as páginas de usuários ao clicar nos botões de paginação
+    Dado que acesso a página de listagem de usuários
+    E existem usuários cadastrados
+    Quando clicar no botão de próxima página
+    E clicar no botão de voltar para página anterior
+    Então devo visualizar o nome e email de cada usuário
 
-  # Cenário: Deve redirecionar para a página de detalhes do usuário ao clicar no botão de detalhes
-  #   Dado que acesso a página de listagem de usuários
-  #   E existem usuários cadastrados
-  #   Quando clicar no botão de detalhes de um usuário
-  #   Então devo ser redirecionado para a página de detalhes do usuário
+  Cenário: Deve redirecionar para a página de detalhes do usuário ao clicar no botão de detalhes
+    Dado que acesso a página de listagem de usuários
+    E existem usuários cadastrados
+    Quando clicar no botão de detalhes de um usuário
+    Então devo ser redirecionado para a página de detalhes do usuário

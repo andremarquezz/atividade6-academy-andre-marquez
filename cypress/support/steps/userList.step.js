@@ -49,6 +49,10 @@ When("existem usuários cadastrados", () => {
   });
 });
 
+When("clicar no botão de próxima página", () => {
+  userListPage.clickNextPageButton();
+});
+
 When("pesquisar por um nome de usuário", () => {
   cy.intercept("GET", "/api/v1/search?value=*").as("searchUser");
 
@@ -96,6 +100,29 @@ When("pesquisar por um email de usuário", () => {
 
 When("não existem usuários cadastrados", () => {});
 
+When("clicar no botão de voltar para página anterior", () => {
+  userListPage.clickBackPageButton();
+});
+
+When("clicar no botão de detalhes de um usuário", () => {
+  cy.get("@getAllUsers").then(({ response }) => {
+    const user = response.body[0];
+
+    cy.intercept("GET", `/api/v1/users/${user.id}`, user).as("getUserById");
+    userListPage.clickFirstUserDetailsButton();
+
+    cy.wait("@getUserById");
+  });
+});
+
+Then("devo ser redirecionado para a página de detalhes do usuário", () => {
+  cy.get("@getAllUsers").then(({ response }) => {
+    const user = response.body[0];
+
+    cy.url().should("include", `/users/${user.id}`);
+  });
+});
+
 Then(
   "devo visualizar uma mensagem de erro informando que não foi encontrado nenhum usuário",
   () => {
@@ -105,6 +132,20 @@ Then(
       .and("contain.text", "Ops! Não existe nenhum usuário para ser exibido.");
   }
 );
+
+Then("devo visualizar os usuários da segunda página", () => {
+  cy.get("@getAllUsers").then(({ response }) => {
+    const pageTwo = response.body.slice(6, 11);
+    pageTwo.forEach((user) => {
+      const truncatedEmail = user.email.substring(0, 21);
+
+      userListPage.getName().should("contain.text", `Nome: ${user.name}`);
+      userListPage
+        .getEmail()
+        .should("contain.text", `E-mail: ${truncatedEmail}`);
+    });
+  });
+});
 
 Then(
   "devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários",
