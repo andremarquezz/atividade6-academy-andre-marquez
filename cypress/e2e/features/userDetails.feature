@@ -1,7 +1,7 @@
 #language: pt
 
-Funcionalidade: Detalhes de usuário
-  Eu como usuário
+ Funcionalidade: Detalhes de usuário
+   Eu como usuário
   Quero ver os detalhes de um usuário
   Para saber mais sobre ele
 

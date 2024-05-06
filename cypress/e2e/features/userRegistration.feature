@@ -1,5 +1,4 @@
 #language: pt
-@registration
  Funcionalidade: Cadastro de usuário
 
   Contexto: O usuario deve ter acesso a página de cadastro
@@ -58,7 +57,6 @@
    E clicar no botão de Salvar
    Então devo ver a mensagem de erro indicando que o email já está cadastrado
 
-# Funcionalidade: Validação dos campos de cadastro de usuário
   Cenário: Deve redirecionar para a tela de listagem de usuarios ao clicar no botão Voltar
    Quando clicar no botão de Voltar
    Então devo ver a página de listagem de usuários

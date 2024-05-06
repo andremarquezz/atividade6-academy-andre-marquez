@@ -10,13 +10,9 @@ import { UserListPage } from "../pages/UserListPage";
 
 const userListPage = new UserListPage();
 
-Before({ tags: "@userList" }, () => {
+Before(() => {
   cy.viewport("macbook-16");
   cy.intercept("GET", "/api/v1/users").as("getAllUsers");
-});
-
-Before({ tags: "@userListEmpty" }, () => {
-  cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
 });
 
 Given("que acesso a página de listagem de usuários", () => {
@@ -33,6 +29,8 @@ Given("que acesso a página de listagem de usuários", () => {
 });
 
 Given("que acesso a página de listagem de usuários vazia", () => {
+  cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
+
   userListPage.visit();
 
   cy.wait("@getEmptyUsers");
