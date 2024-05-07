@@ -82,6 +82,7 @@ Then("vejo a mensagem que a informação foi atualizada com sucesso", () => {
 });
 
 Then("vejo a mensagem que o usuário não foi encontrado", () => {
+  cy.wait(1000);
   userDetailsPage
     .getModalAlert()
     .should("be.visible")
