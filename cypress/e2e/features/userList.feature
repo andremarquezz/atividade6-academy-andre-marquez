@@ -1,6 +1,16 @@
 #language: pt
 Funcionalidade: Listagem de usuários
 
+  Cenário: Ancora para página de cadastro quando a lista de usuários estiver vazia
+   Dado que estou na página de listagem de usuários vazia
+   Então devo visualizar uma âncora para a página de cadastro de usuários
+
+
+  Cenário: Mensagem de erro ao consultar a lista de usuários e a API falhar
+   Dado que a API de listagem de usuários está offline
+   Quando acesso a página de listagem de usuários
+   Então devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários
+
   Contexto: O usuário deve ter acesso à página de listagem de usuários
    Dado que acessei a página de listagem de usuários
 
@@ -49,13 +59,3 @@ Funcionalidade: Listagem de usuários
    E existem usuários cadastrados
    Quando clicar no botão de detalhes de um usuário
    Então devo ser redirecionado para a página de detalhes do usuário
-
-  Cenário: Ancora para página de cadastro quando a lista de usuários estiver vazia
-   Dado que estou na página de listagem de usuários vazia
-   Então devo visualizar uma âncora para a página de cadastro de usuários
-
-
-  Cenário: Mensagem de erro ao consultar a lista de usuários e a API falhar
-   Dado que a API de listagem de usuários está offline
-   Quando acesso a página de listagem de usuários
-   Então devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários

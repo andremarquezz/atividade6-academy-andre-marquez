@@ -2,52 +2,41 @@
 
 Funcionalidade: Detalhes de usuário
 
-  @createUserDetails
-  Cenário: Deve ser possível consultar os detalhes de um usuário
+  Cenário: Exibir mensagem de usuário não encontrado
+   Dado que acessei a página de detalhes de um usuário que não existe
+   Quando o usuário não for encontrado
+   Então devo ver a mensagem informando que o usuário não foi encontrado
+
+  Cenário: Redirecionar para página de lista de usuários ao clicar em "Cancelar"
+   Dado que acessei a página de detalhes de um usuário que não existe
+   Quando o usuário não for encontrado
+   E clico no botão 'Cancelar'
+   Então devo ser redirecionado para a lista de usuários cadastrados
+
+  Contexto: O usuário deve ter acesso à página de listagem de usuários
    Dado que acessei a página de detalhes do usuário
+
+  Cenário: Consultar os detalhes de um usuário
    Quando visualizo as informações do usuário
-   Então devo visualizar o ID do usuário
-   E devo visualizar o nome do usuário
-   E devo visualizar o email do usuário
-
-  Cenário: Deve ser exibida uma mensagem de usuário não encontrado
-   Dado que acessei a página de detalhes do usuário que não existe
-   Quando o usuário não for encontrado
-   Então vejo a mensagem que o usuário não foi encontrado
-
-  Cenário:  Deve redirecionar para pagina de lista de usuarios quando o usuario não for encontrado e clicar no botão de cancelar
-   Dado que acessei a página de detalhes do usuário que não existe
-   Quando o usuário não for encontrado
-   E clico no botão de cancelar
-   Então  sou redirecionado para a lista de usuários cadastrados
-
-  Cenário: Deve liberar os campos para edição quando clicar no botão de editar
-   Dado que acessei a página de detalhes do usuário
-   Quando  clico no botão de editar
-   Então os campos de nome e email estão liberados para edição
-  
-  Cenário: Deve ser possível editar o nome de um usuário
-   Dado que acessei a página de detalhes do usuário
-   Quando clico no botão de editar
+   Então devo visualizar o ID, nome e email do usuário
+   
+  Cenário: Editar o nome de um usuário
+   Quando clico no botão 'Editar'
    E os campos de nome e email estão liberados para edição
    E digito um novo nome
-   E clico no botão de salvar
-   Então vejo a mensagem que a informação foi atualizada com sucesso
+   E clico no botão 'Salvar'
+   Então devo ver a mensagem informando que a informação foi atualizada com sucesso
 
-  Cenário: Deve ser possível editar o email de um usuário
-   Dado que acessei a página de detalhes do usuário
-   Quando clico no botão de editar
+  Cenário: Editar o email de um usuário
+   Quando clico no botão 'Editar'
    E os campos de nome e email estão liberados para edição
    E digito um novo email
-   E clico no botão de salvar
-   Então vejo a mensagem que a informação foi atualizada com sucesso
+   E clico no botão 'Salvar'
+   Então devo ver a mensagem informando que a informação foi atualizada com sucesso
 
-  Cenário: Não deve ser possível editar o email de um usuário com um email já cadastrado
-   Dado que acessei a página de detalhes do usuário
-   Quando clico no botão de editar
+  Cenário: Não editar email de um usuário com email já cadastrado
+   Quando clico no botão 'Editar'
    E os campos de nome e email estão liberados para edição
    E digito um email já cadastrado
-   E clico no botão de salvar
-   Então vejo a mensagem que o email já está em uso
-
-   
+   E clico no botão 'Salvar'
+   Então devo ver a mensagem informando que o email já está em uso

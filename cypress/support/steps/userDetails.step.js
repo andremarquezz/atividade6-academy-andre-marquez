@@ -14,21 +14,19 @@ const userListPage = new UserListPage();
 let user;
 
 Before(() => {
-  cy.viewport("macbook-16");
-  cy.intercept("GET", "/api/v1/users/*").as("getUserById");
-});
-
-Before({ tags: "@createUserDetails" }, () => {
   cy.createUser().then((randomUser) => {
     user = randomUser;
   });
+
+  cy.viewport("macbook-16");
+  cy.intercept("GET", "/api/v1/users/*").as("getUserById");
 });
 
 Given("que acessei a página de detalhes do usuário", () => {
   userDetailsPage.visit(user.id);
 });
 
-Given("que acessei a página de detalhes do usuário que não existe", () => {
+Given("que acessei a página de detalhes de um usuário que não existe", () => {
   const fakeId = "ca8efbac-3269-4d28-8e89-4cd5345";
 
   userDetailsPage.visit(fakeId);
@@ -42,11 +40,11 @@ When("o usuário não for encontrado", () => {
   cy.wait("@getUserById");
 });
 
-When("clico no botão de editar", () => {
+When("clico no botão 'Editar'", () => {
   userDetailsPage.clickEditButton();
 });
 
-When("clico no botão de cancelar", () => {
+When("clico no botão 'Cancelar'", () => {
   userDetailsPage.clickCancelButton();
 });
 
@@ -71,7 +69,7 @@ When("digito um novo email", () => {
   userDetailsPage.typeEmail(email);
 });
 
-When("clico no botão de salvar", () => {
+When("clico no botão 'Salvar'", () => {
   userDetailsPage.clickSaveButton();
 });
 
@@ -84,14 +82,17 @@ When("digito um email já cadastrado", () => {
   userDetailsPage.typeEmail("jey@gmail.com");
 });
 
-Then("vejo a mensagem que a informação foi atualizada com sucesso", () => {
-  userDetailsPage
-    .getModalSucess()
-    .should("be.visible")
-    .and("contain.text", "Informações atualizadas com sucesso!");
-});
+Then(
+  "devo ver a mensagem informando que a informação foi atualizada com sucesso",
+  () => {
+    userDetailsPage
+      .getModalSucess()
+      .should("be.visible")
+      .and("contain.text", "Informações atualizadas com sucesso!");
+  }
+);
 
-Then("vejo a mensagem que o usuário não foi encontrado", () => {
+Then("devo ver a mensagem informando que o usuário não foi encontrado", () => {
   cy.wait(1000);
   userDetailsPage
     .getModalAlert()
@@ -100,26 +101,22 @@ Then("vejo a mensagem que o usuário não foi encontrado", () => {
     .and("contain.text", "Não foi possível localizar o usuário.");
 });
 
-Then("devo visualizar o ID do usuário", () => {
+Then("devo visualizar o ID, nome e email do usuário", () => {
   userDetailsPage.getIdInput().should("be.disabled");
   userDetailsPage.getIdInput().invoke("val").should("eq", user.id);
-});
 
-Then("devo visualizar o nome do usuário", () => {
   userDetailsPage.getNameInput().should("be.disabled");
   userDetailsPage.getNameInput().invoke("val").should("eq", user.name);
-});
 
-Then("sou redirecionado para a lista de usuários cadastrados", () => {
-  cy.url().should("eq", userListPage.URL);
-});
-
-Then("devo visualizar o email do usuário", () => {
   userDetailsPage.getEmailInput().should("be.disabled");
   userDetailsPage.getEmailInput().invoke("val").should("eq", user.email);
 });
 
-Then("vejo a mensagem que o email já está em uso", () => {
+Then("devo ser redirecionado para a lista de usuários cadastrados", () => {
+  cy.url().should("eq", userListPage.URL);
+});
+
+Then("devo ver a mensagem informando que o email já está em uso", () => {
   cy.wait("@ErrorUpdateUser");
   userDetailsPage
     .getModalAlert()
