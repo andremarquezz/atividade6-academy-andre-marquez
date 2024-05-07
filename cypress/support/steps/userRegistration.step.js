@@ -91,6 +91,10 @@ When("clicar no ícone da Raro", () => {
   userRegistrationPage.clickRaroIcon();
 });
 
+When("preencher um email com menos de 4 caracteres", () => {
+  userRegistrationPage.typeEmail("@j");
+});
+
 Then("devo ver a mensagem de sucesso", () => {
   cy.wait("@createUser");
   userRegistrationPage
@@ -105,6 +109,16 @@ Then("devo ver a mensagem de erro indicando que o nome é obrigatório", () => {
     .should("be.visible")
     .and("contain.text", "O campo nome é obrigatório.");
 });
+
+Then(
+  "devo ver a mensagem de erro indicando que o email deve ter pelo menos 4 caracteres",
+  () => {
+    userRegistrationPage
+      .getErrorFeedbackMessageEmail()
+      .should("be.visible")
+      .and("contain.text", "Informe pelo menos 4 caracteres para o e-mail.");
+  }
+);
 
 Then(
   "devo ver a mensagem de erro indicando que o formato do nome é inválido",
