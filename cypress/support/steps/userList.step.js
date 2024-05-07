@@ -50,11 +50,6 @@ When("existem usuários cadastrados", () => {
   });
 });
 
-When("acesso a página de listagem de usuários", () => {
-  userListPage.visit();
-  cy.wait("@getAllUsers");
-});
-
 When("clicar no botão de próxima página", () => {
   userListPage.clickNextPageButton();
 });
