@@ -27,7 +27,7 @@
   Cenário: Deve liberar os campos para edição quando clicar no botão de editar
     Dado que acessei a página de detalhes do usuário
     Quando  clico no botão de editar
-    Então os campos de nome e email devem estar liberados para edição
+    Então os campos de nome e email estão liberados para edição
   
   Cenário: Deve ser possível editar o nome de um usuário
     Dado que acessei a página de detalhes do usuário
