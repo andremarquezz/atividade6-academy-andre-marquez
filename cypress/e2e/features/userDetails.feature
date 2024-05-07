@@ -45,4 +45,12 @@
     E clico no botão de salvar
     Então vejo a mensagem que a informação foi atualizada com sucesso
 
+  Cenário: Não deve ser possível editar o email de um usuário com um email já cadastrado
+    Dado que acessei a página de detalhes do usuário
+    Quando clico no botão de editar
+    E os campos de nome e email estão liberados para edição
+    E digito um email já cadastrado
+    E clico no botão de salvar
+    Então vejo a mensagem que o email já está em uso
+
    

@@ -5,6 +5,7 @@ import {
   When,
 } from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
+import { mockErrorEmailAlreadyExists } from "../../fixtures/mocksErrors";
 import { UserDetailsPage } from "../pages/UserDetailsPage";
 import { UserListPage } from "../pages/UserListPage";
 
@@ -74,6 +75,15 @@ When("clico no botão de salvar", () => {
   userDetailsPage.clickSaveButton();
 });
 
+When("digito um email já cadastrado", () => {
+  cy.intercept("PUT", "/api/v1/users/*", mockErrorEmailAlreadyExists).as(
+    "ErrorUpdateUser"
+  );
+
+  userDetailsPage.clearEmail();
+  userDetailsPage.typeEmail("jey@gmail.com");
+});
+
 Then("vejo a mensagem que a informação foi atualizada com sucesso", () => {
   userDetailsPage
     .getModalSucess()
@@ -107,4 +117,12 @@ Then("sou redirecionado para a lista de usuários cadastrados", () => {
 Then("devo visualizar o email do usuário", () => {
   userDetailsPage.getEmailInput().should("be.disabled");
   userDetailsPage.getEmailInput().invoke("val").should("eq", user.email);
+});
+
+Then("vejo a mensagem que o email já está em uso", () => {
+  cy.wait("@ErrorUpdateUser");
+  userDetailsPage
+    .getModalAlert()
+    .should("be.visible")
+    .and("contain.text", "Este e-mail já é utilizado por outro usuário.");
 });
