@@ -9,9 +9,16 @@ Funcionalidade: Cadastro de usuário
    E clicar no botão de Salvar
    Então devo ver a mensagem de sucesso
 
- Cenário: Deve exibir mensagem de erro ao tentar cadastrar um usuário com email inválido
+ Esquema do Cenário: Deve exibir mensagem de erro ao tentar cadastrar um usuário com email inválido
    Quando preencher um nome válido
-   E preencher um email inválido "@jey"
+   E preencher um email inválido "<email>"
+   Exemplos:
+    | email      |
+    | @          |
+    | jey@       |
+    | jey@gmail  |
+    | @gmail.com |
+    | jey@.com   |
    E clicar no botão de Salvar
    Então devo ver a mensagem de erro indicando que o email é inválido
 
