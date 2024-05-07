@@ -30,10 +30,8 @@ When("preencher um nome com números", () => {
   userRegistrationPage.typeName(name);
 });
 
-When("preencher um email inválido", (table) => {
-  const data = table.rowsHash();
-  cy.log(data);
-  userRegistrationPage.typeEmail(data.email);
+When("preencher um email inválido {string}", (email) => {
+  userRegistrationPage.typeEmail(email);
 });
 
 When("preencher um email válido", () => {
