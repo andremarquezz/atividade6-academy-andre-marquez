@@ -16,24 +16,30 @@ Before(() => {
   cy.viewport("macbook-16");
 });
 
-Given("que estou na página de cadastro", () => {
+Given("que acessei a página de cadastro", () => {
   userRegistrationPage.visit();
 });
 
-When("preencher o nome {string}", (name) => {
+When("preencher um nome com menos de 4 caracteres", () => {
+  const name = "Jey";
   userRegistrationPage.typeName(name);
 });
 
-When("preencher o email {string}", (email) => {
-  userRegistrationPage.typeEmail(email);
+When("preencher um nome com números", () => {
+  const name = "Jey342";
+  userRegistrationPage.typeName(name);
 });
 
-When("preencher o email com um email válido", () => {
+When("preencher um email inválido", (tabela) => {
+  console.log(tabela);
+});
+
+When("preencher um email válido", () => {
   const email = faker.internet.email();
   userRegistrationPage.typeEmail(email);
 });
 
-When("preencher o nome com um nome válido", () => {
+When("preencher um nome válido", () => {
   const name = faker.helpers.arrayElement(
     faker.rawDefinitions.person.first_name.filter((a) => a.length >= 4)
   );
@@ -44,12 +50,12 @@ When("não preencher o nome", () => {});
 
 When("não preencher o email", () => {});
 
-When("preencher o nome com mais de 100 caracteres", () => {
+When("preencher um nome com mais de 100 caracteres", () => {
   const name = faker.lorem.words(101);
   userRegistrationPage.typeName(name);
 });
 
-When("preencher o nome e email", () => {
+When("preencher um nome válido e um email válido", () => {
   const name = faker.helpers.arrayElement(
     faker.rawDefinitions.person.first_name.filter((a) => a.length >= 4)
   );
@@ -59,12 +65,12 @@ When("preencher o nome e email", () => {
   userRegistrationPage.typeEmail(email);
 });
 
-When("preencher o email com um email com mais de 60 caracteres", () => {
+When("preencher um email com mais de 60 caracteres", () => {
   const email = `${faker.lorem.words(46)}@gmail.com`;
   userRegistrationPage.typeEmail(email);
 });
 
-When("preencher o email com um email já cadastrado", () => {
+When("preencher um email já cadastrado", () => {
   cy.intercept("POST", "/api/v1/users", mockErrorUserAlreadyExists).as(
     "UserAlreadyExists"
   );
@@ -81,7 +87,7 @@ When("clicar no botão de Voltar", () => {
   userRegistrationPage.clickBackButton();
 });
 
-When("clicar no icone da Raro", () => {
+When("clicar no ícone da Raro", () => {
   userRegistrationPage.clickRaroIcon();
 });
 
