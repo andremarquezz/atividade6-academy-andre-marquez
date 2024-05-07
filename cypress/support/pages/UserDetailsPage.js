@@ -3,9 +3,10 @@ export class UserDetailsPage {
   nameInput = "#userName";
   emailInput = "#userEmail";
   editButton = '[type="button"] > .sc-dAlyuH';
-  saveButton = '.sc-kpDqfm [type="submit"]';
+  saveButton = '[type="submit"] > .sc-dAlyuH';
   cancelButton = ".sc-lcIPJg";
   modalAlert = ".sc-dCFHLb";
+  modalSucess = ".go3958317564";
 
   URL = "https://rarocrud-frontend-88984f6e4454.herokuapp.com/users";
 
@@ -29,12 +30,24 @@ export class UserDetailsPage {
     return cy.get(this.modalAlert);
   }
 
+  getModalSucess() {
+    return cy.get(this.modalSucess);
+  }
+
   typeName(name) {
     return cy.get(this.nameInput).type(name);
   }
 
+  clearName() {
+    return cy.get(this.nameInput).clear();
+  }
+
   typeEmail(email) {
     return cy.get(this.emailInput).type(email);
+  }
+
+  clearEmail() {
+    return cy.get(this.emailInput).clear();
   }
 
   clickEditButton() {
