@@ -12,10 +12,6 @@ const userListPage = new UserListPage();
 
 Before(() => {
   cy.viewport("macbook-16");
-  cy.intercept("GET", "/api/v1/users").as("getAllUsers");
-});
-
-Given("que acesso a página de listagem de usuários", () => {
   cy.intercept("GET", "/api/v1/users", (req) => {
     if (Cypress.env("apiFailure")) {
       req.reply(mockErrorInternalServer);
@@ -23,12 +19,14 @@ Given("que acesso a página de listagem de usuários", () => {
       req.continue();
     }
   }).as("getAllUsers");
+});
 
+Given("que acessei a página de listagem de usuários", () => {
   userListPage.visit();
   cy.wait("@getAllUsers");
 });
 
-Given("que acesso a página de listagem de usuários vazia", () => {
+Given("que estou na página de listagem de usuários vazia", () => {
   cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
 
   userListPage.visit();
@@ -52,6 +50,11 @@ When("existem usuários cadastrados", () => {
   });
 });
 
+When("acesso a página de listagem de usuários", () => {
+  userListPage.visit();
+  cy.wait("@getAllUsers");
+});
+
 When("clicar no botão de próxima página", () => {
   userListPage.clickNextPageButton();
 });
@@ -67,7 +70,7 @@ When("pesquisar por um nome de usuário", () => {
   });
 });
 
-When("clicar no icone de limpar pesquisa", () => {
+When("clicar no ícone de limpar pesquisa", () => {
   userListPage.clickClearSearchButton();
   cy.wait("@getAllUsers");
 });
@@ -86,7 +89,7 @@ When("pesquisar por um email de usuário que não existe", () => {
   cy.wait("@searchUser");
 });
 
-Given("que a API de listagem de usuários esta offline", () => {
+Given("que a API de listagem de usuários está offline", () => {
   Cypress.env("apiFailure", true);
 });
 
@@ -103,7 +106,7 @@ When("pesquisar por um email de usuário", () => {
 
 When("não existem usuários cadastrados", () => {});
 
-When("clicar no botão de voltar para página anterior", () => {
+When("clicar no botão de voltar para a página anterior", () => {
   userListPage.clickBackPageButton();
 });
 
@@ -184,7 +187,7 @@ Then("devo visualizar o nome e email do usuário pesquisado", () => {
   });
 });
 
-Then("devo visualizar uma ancora para a página de cadastro de usuários", () => {
+Then("devo visualizar uma âncora para a página de cadastro de usuários", () => {
   userListPage
     .getEmptyUserListMessage()
     .should("be.visible")
