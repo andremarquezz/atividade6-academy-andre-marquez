@@ -20,36 +20,36 @@ Given("que estou na página de cadastro", () => {
   userRegistrationPage.visit();
 });
 
-When("preencher o campo nome {string}", (name) => {
+When("preencher o nome {string}", (name) => {
   userRegistrationPage.typeName(name);
 });
 
-When("preencher o campo email {string}", (email) => {
+When("preencher o email {string}", (email) => {
   userRegistrationPage.typeEmail(email);
 });
 
-When("preencher o campo email com um email válido", () => {
+When("preencher o email com um email válido", () => {
   const email = faker.internet.email();
   userRegistrationPage.typeEmail(email);
 });
 
-When("preencher o campo nome com um nome válido", () => {
+When("preencher o nome com um nome válido", () => {
   const name = faker.helpers.arrayElement(
     faker.rawDefinitions.person.first_name.filter((a) => a.length >= 4)
   );
   userRegistrationPage.typeName(name);
 });
 
-When("não preencher o campo nome", () => {});
+When("não preencher o nome", () => {});
 
-When("não preencher o campo email", () => {});
+When("não preencher o email", () => {});
 
-When("preencher o campo nome com mais de 100 caracteres", () => {
+When("preencher o nome com mais de 100 caracteres", () => {
   const name = faker.lorem.words(101);
   userRegistrationPage.typeName(name);
 });
 
-When("preencher os campos nome e email", () => {
+When("preencher o nome e email", () => {
   const name = faker.helpers.arrayElement(
     faker.rawDefinitions.person.first_name.filter((a) => a.length >= 4)
   );
@@ -59,12 +59,12 @@ When("preencher os campos nome e email", () => {
   userRegistrationPage.typeEmail(email);
 });
 
-When("preencher o campo email com um email com mais de 60 caracteres", () => {
+When("preencher o email com um email com mais de 60 caracteres", () => {
   const email = `${faker.lorem.words(46)}@gmail.com`;
   userRegistrationPage.typeEmail(email);
 });
 
-When("preencher o campo email com um email já cadastrado", () => {
+When("preencher o email com um email já cadastrado", () => {
   cy.intercept("POST", "/api/v1/users", mockErrorUserAlreadyExists).as(
     "UserAlreadyExists"
   );
