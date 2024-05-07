@@ -139,10 +139,12 @@ Then(
 Then("devo visualizar os usuários da segunda página", () => {
   cy.get("@getAllUsers").then(({ response }) => {
     const pageTwo = response.body.slice(6, 11);
+
     pageTwo.forEach((user) => {
+      const truncatedName = user.name.substring(0, 21);
       const truncatedEmail = user.email.substring(0, 21);
 
-      userListPage.getName().should("contain.text", `Nome: ${user.name}`);
+      userListPage.getName().should("contain.text", `Nome: ${truncatedName}`);
       userListPage
         .getEmail()
         .should("contain.text", `E-mail: ${truncatedEmail}`);
@@ -169,11 +171,12 @@ Then("devo visualizar o nome e email do usuário pesquisado", () => {
   cy.get("@getAllUsers").then(({ response }) => {
     const user = response.body[0];
     const truncatedEmail = user.email.substring(0, 21);
+    const truncatedName = user.name.substring(0, 21);
 
     userListPage
       .getName()
       .should("be.visible")
-      .and("contain.text", `Nome: ${user.name}`);
+      .and("contain.text", `Nome: ${truncatedName}`);
     userListPage
       .getEmail()
       .should("be.visible")
@@ -198,9 +201,10 @@ Then("devo visualizar o nome e email de cada usuário", () => {
     const pageOne = body.slice(0, 5);
 
     pageOne.forEach((user) => {
+      const truncatedName = user.name.substring(0, 21);
       const truncatedEmail = user.email.substring(0, 21);
 
-      userListPage.getName().should("contain.text", `Nome: ${user.name}`);
+      userListPage.getName().should("contain.text", `Nome: ${truncatedName}`);
       userListPage
         .getEmail()
         .should("contain.text", `E-mail: ${truncatedEmail}`);
