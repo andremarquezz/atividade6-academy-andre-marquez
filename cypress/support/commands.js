@@ -12,10 +12,7 @@ Cypress.Commands.add("createUser", () => {
     method: "POST",
     url: "https://rarocrud-80bf38b38f1f.herokuapp.com/api/v1/users",
     body: infoUser,
-  }).as("createUser");
-
-  cy.wait("@createUser").then((response) => {
-    cy.log(response.body);
+  }).then((response) => {
     return response.body;
   });
 });
