@@ -12,7 +12,7 @@ import { UserRegistrationPage } from "../pages/UserRegistrationPage";
 const userRegistrationPage = new UserRegistrationPage();
 const userListPage = new UserListPage();
 
-Before({ tags: "@registration" }, () => {
+Before(() => {
   cy.viewport("macbook-16");
 });
 
