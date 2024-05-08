@@ -4,7 +4,6 @@ import {
   Then,
   When,
 } from "@badeball/cypress-cucumber-preprocessor";
-import { faker } from "@faker-js/faker";
 import { mockErrorInternalServer } from "../../fixtures/mocksErrors";
 import { UserListPage } from "../pages/UserListPage";
 
@@ -35,17 +34,13 @@ When("a listagem estiver vazia", () => {
 });
 
 When("existem usuários cadastrados", () => {
+  const MINIMUM_USERS = 12;
+
   cy.get("@getAllUsers").then(({ response: { body } }) => {
-    if (body.length === 0) {
-      const name = "Jeey";
-      const email = faker.internet.email();
-
-      cy.request("POST", "/api/v1/users", {
-        name,
-        email,
+    if (body.length < MINIMUM_USERS) {
+      cy.createUsers().then(() => {
+        userListPage.visit();
       });
-
-      userListPage.visit();
     }
   });
 });
