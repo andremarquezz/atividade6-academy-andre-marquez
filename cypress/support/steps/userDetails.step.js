@@ -26,7 +26,6 @@ Before(() => {
 });
 
 Before({ tags: "@userNotFound" }, () => {
-  cy.viewport("macbook-16");
   cy.intercept("GET", "/api/v1/users/*", mockErrorUserNotFound).as(
     "userNotFound"
   );
