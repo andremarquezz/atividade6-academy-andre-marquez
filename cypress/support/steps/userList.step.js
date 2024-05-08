@@ -12,13 +12,13 @@ const userListPage = new UserListPage();
 
 Before(() => {
   cy.viewport("macbook-16");
-  cy.intercept("GET", "/api/v1/users", (req) => {
-    if (Cypress.env("apiFailure")) {
-      req.reply(mockErrorInternalServer);
-    } else {
-      req.continue();
-    }
-  }).as("getAllUsers");
+  cy.intercept("GET", "/api/v1/users").as("getAllUsers");
+});
+
+Before({ tags: "@apiFailure" }, () => {
+  cy.intercept("GET", "/api/v1/users", mockErrorInternalServer).as(
+    "getAllUsers"
+  );
 });
 
 Given("que acessei a página de listagem de usuários", () => {
@@ -26,7 +26,7 @@ Given("que acessei a página de listagem de usuários", () => {
   cy.wait("@getAllUsers");
 });
 
-Given("que estou na página de listagem de usuários vazia", () => {
+When("a listagem estiver vazia", () => {
   cy.intercept("GET", "/api/v1/users", {}).as("getEmptyUsers");
 
   userListPage.visit();
@@ -84,7 +84,7 @@ When("pesquisar por um email de usuário que não existe", () => {
   cy.wait("@searchUser");
 });
 
-Given("que a API de listagem de usuários está offline", () => {
+When("a API estiver offline", () => {
   Cypress.env("apiFailure", true);
 });
 

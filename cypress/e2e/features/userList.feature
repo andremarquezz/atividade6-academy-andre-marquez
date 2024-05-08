@@ -1,18 +1,17 @@
 #language: pt
 Funcionalidade: Listagem de usuários
 
-  Cenário: Deve exitir uma ancora para página de cadastro quando a lista de usuários estiver vazia
-   Dado que estou na página de listagem de usuários vazia
-   Então devo visualizar uma âncora para a página de cadastro de usuários
-
-
-  Cenário: Deve exibirt mensagem de erro ao consultar a lista de usuários e a API falhar
-   Dado que a API de listagem de usuários está offline
-   E que acessei a página de listagem de usuários
-   Então devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários
-
   Contexto: O usuário deve ter acesso à página de listagem de usuários
    Dado que acessei a página de listagem de usuários
+
+  Cenário: Deve exitir uma ancora para página de cadastro quando a lista de usuários estiver vazia
+   Quando a listagem estiver vazia
+   Então devo visualizar uma âncora para a página de cadastro de usuários
+
+  @apiFailure
+  Cenário: Deve exibir mensagem de erro ao consultar a lista de usuários e a API falhar
+   Quando a API estiver offline
+   Então devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários
 
   Cenário: Deve consultar a lista de usuários
    E existem usuários cadastrados

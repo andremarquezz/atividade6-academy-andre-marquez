@@ -5,7 +5,10 @@ import {
   When,
 } from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
-import { mockErrorEmailAlreadyExists } from "../../fixtures/mocksErrors";
+import {
+  mockErrorEmailAlreadyExists,
+  mockErrorUserNotFound,
+} from "../../fixtures/mocksErrors";
 import { UserDetailsPage } from "../pages/UserDetailsPage";
 import { UserListPage } from "../pages/UserListPage";
 
@@ -22,14 +25,15 @@ Before(() => {
   cy.intercept("GET", "/api/v1/users/*").as("getUserById");
 });
 
-Given("que acessei a página de detalhes do usuário", () => {
-  userDetailsPage.visit(user.id);
+Before({ tags: "@userNotFound" }, () => {
+  cy.viewport("macbook-16");
+  cy.intercept("GET", "/api/v1/users/*", mockErrorUserNotFound).as(
+    "userNotFound"
+  );
 });
 
-Given("que acessei a página de detalhes de um usuário que não existe", () => {
-  const fakeId = "ca8efbac-3269-4d28-8e89-4cd5345";
-
-  userDetailsPage.visit(fakeId);
+Given("que acessei a página de detalhes do usuário", () => {
+  userDetailsPage.visit(user.id);
 });
 
 When("visualizo as informações do usuário", () => {
@@ -37,7 +41,7 @@ When("visualizo as informações do usuário", () => {
 });
 
 When("o usuário não for encontrado", () => {
-  cy.wait("@getUserById");
+  cy.wait("@userNotFound");
 });
 
 When("clico no botão 'Editar'", () => {
