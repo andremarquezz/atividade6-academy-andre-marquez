@@ -38,7 +38,7 @@ When("existem usuários cadastrados", () => {
 
   cy.get("@getAllUsers").then(({ response: { body } }) => {
     if (body.length < MINIMUM_USERS) {
-      cy.createUsers().then(() => {
+      cy.createMultipleUsers().then(() => {
         userListPage.visit();
       });
     }

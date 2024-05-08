@@ -17,7 +17,7 @@ const userListPage = new UserListPage();
 let user;
 
 Before(() => {
-  cy.createUser().then((randomUser) => {
+  cy.createSingleUser().then((randomUser) => {
     user = randomUser;
   });
 
