@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 
-Cypress.Commands.add("createUsers", (count = 0, users = []) => {
-  const TOTAL_USERS = 12;
+Cypress.Commands.add("createUsers", (countUser = 0, users = []) => {
+  const MINIMUM_USERS = 12;
 
-  if (count === TOTAL_USERS) {
+  if (countUser === MINIMUM_USERS) {
     return users;
   }
 
@@ -22,6 +22,6 @@ Cypress.Commands.add("createUsers", (count = 0, users = []) => {
     })
     .then((response) => {
       users.push(response.body);
-      return cy.createUsers(count + 1, users);
+      return cy.createUsers(countUser + 1, users);
     });
 });
