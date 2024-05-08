@@ -148,6 +148,7 @@ Then("devo visualizar os usuários da segunda página", () => {
 Then(
   "devo visualizar uma mensagem de erro informando que não foi possível carregar a lista de usuários",
   () => {
+    cy.wait(2000);
     userListPage
       .getModalErrorServerMessage()
       .should("be.visible")
