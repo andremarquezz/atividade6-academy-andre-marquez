@@ -1,4 +1,5 @@
 import {
+  AfterAll,
   Before,
   Given,
   Then,
@@ -18,6 +19,10 @@ Before({ tags: "@apiFailure" }, () => {
   cy.intercept("GET", "/api/v1/users", mockErrorInternalServer).as(
     "getAllUsers"
   );
+});
+
+AfterAll(() => {
+  cy.deleteUsers();
 });
 
 Given("que acessei a página de listagem de usuários", () => {

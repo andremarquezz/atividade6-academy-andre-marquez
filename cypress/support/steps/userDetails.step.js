@@ -1,5 +1,7 @@
 import {
+  AfterAll,
   Before,
+  BeforeAll,
   Given,
   Then,
   When,
@@ -16,11 +18,18 @@ const userDetailsPage = new UserDetailsPage();
 const userListPage = new UserListPage();
 let user;
 
-Before(() => {
+BeforeAll(() => {
   cy.createSingleUser().then((randomUser) => {
+    Cypress.env("CURRENT_USERS", [randomUser]);
     user = randomUser;
   });
+});
 
+AfterAll(() => {
+  cy.deleteUsers();
+});
+
+Before(() => {
   cy.viewport("macbook-16");
   cy.intercept("GET", "/api/v1/users/*").as("getUserById");
 });
